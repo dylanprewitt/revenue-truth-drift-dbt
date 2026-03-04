@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: fct_truth_drift
+    description: "Core table calculating revenue variance between Stripe billing and Salesforce CRM data."
+    columns:
+      - name: customer_id
+        description: "The primary key for the merged record."
+        tests:
+          - unique
+          - not_null
+      - name: audit_flag
+        description: "Categorical flag identifying the type of data drift present."
