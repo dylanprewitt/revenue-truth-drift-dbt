@@ -1,9 +1,8 @@
-CREATE OR REPLACE TABLE `revenue-operations-analytics.raw.fct_truth_drift` AS
 WITH billing AS (
-    SELECT * FROM `revenue-operations-analytics.raw.stg_stripe_billing`
+    SELECT * FROM {{ ref('stg_stripe_billing') }}
 ),
 crm AS (
-    SELECT * FROM `revenue-operations-analytics.raw.stg_salesforce_crm`
+    SELECT * FROM {{ ref('stg_salesforce_crm') }}
 )
 SELECT
     COALESCE(b.customer_id, c.customer_id) AS customer_id,
@@ -21,4 +20,4 @@ SELECT
     END AS audit_flag
 FROM billing b
 FULL OUTER JOIN crm c 
-    ON b.customer_id = c.customer_id;
+    ON b.customer_id = c.customer_id
